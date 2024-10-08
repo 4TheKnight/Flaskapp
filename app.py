@@ -140,6 +140,8 @@ def deletepost(id):
 @app.route('/makepost',methods = ['GET','POST'])
 @login_required
 def makepost():
+    if not os.path.exists(app.config['UPLOAD_FOLDER']):
+            os.makedirs(app.config['UPLOAD_FOLDER'])
     form = PropertyForm()
     if(current_user.admin==True):
         if request.method=="POST":
