@@ -1,0 +1,32 @@
+{% extends "master.html" %}
+
+{% block title %}
+    login
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h1> Login</h1>
+    <form method="POST" action="{{ url_for('login') }}">
+        {{ form.hidden_tag() }}  <!-- CSRF protection -->
+        <div class="mb-3">
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control") }}
+            {% for error in form.username.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-control") }}
+            {% for error in form.password.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        {{ form.submit(class="btn btn-primary") }}
+        <a href="{{url_for('register')}}" class="btn btn-info""> register as user </a>
+        <a href="{{url_for('admin_register')}}" class="btn btn-info""> register as admin </a>
+
+    </form>
+</div>
+{% endblock content %}

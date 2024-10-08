@@ -1,0 +1,88 @@
+{% extends "master.html" %}
+
+{% block title %}
+    Home page
+{% endblock title %}
+
+{% block content %}
+<h1> Welcome to EsateX {% for x in data %} Mr {{ x }} {% endfor %} </h1>
+<a href="{{ url_for('logout') }}" class="btn btn-secondary"> Logout </a>
+
+<form method="POST" action="{{ url_for('delete_user') }}">
+    <button type="submit" class="btn btn-danger">Delete Account</button>
+</form>
+{% if admin == True %}
+    <a href="{{ url_for('makepost') }}" class="btn btn-primary"> Make post </a>
+{% endif %}
+
+<div class="container mt-4">
+    <h1>Properties</h1>
+
+    <div class="row">
+        {% for property in post %}
+            <div class="col-md-4">
+                <div class="card mb-3" style="background-color: darkblue; color: white;">
+                    <div class="card-body">
+                        <h5 class="card-title">Property in {{ property.location }}</h5>
+                        <p class="card-text">
+                            <strong>Contact Email:</strong> {{ property.contact_email }} <br>
+                            <strong>Contact Number:</strong> {{ property.contact_number }} <br>
+                            <strong>Price:</strong> {{ property.price }} <br>
+                            <strong>Bedrooms:</strong> {{ property.bedrooms }} <br>
+                            <strong>Bathrooms:</strong> {{ property.bathrooms }} <br>
+                            <strong>Carpet Area:</strong> {{ property.carpet_area }} sq. ft.  
+                            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#imageModal{{ property.id }}">
+                                View Images
+                            </button>
+                            {% if admin == True %}               
+                                <form method="POST" action="{{ url_for('deletepost', id=property.id) }}">
+                                    <button type="submit" class="btn btn-danger">Delete Post</button>
+                                </form>                            
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal for Images -->
+            <div class="modal fade" id="imageModal{{ property.id }}" tabindex="-1" aria-labelledby="imageModalLabel{{ property.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="imageModalLabel{{ property.id }}">Images for Property in {{ property.location }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {% if property.images %}
+                                <div id="carousel{{ property.id }}" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        {% for image in property.images %}
+                                            <div class="carousel-item {% if loop.index == 1 %} active {% endif %}">
+                                                <img src="{{ url_for('static', filename='images/' + image.image_file) }}" alt="Property Image" class="d-block w-100" style="max-height: 500px; object-fit: cover;">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ property.id }}" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ property.id }}" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            {% else %}
+                                <p>No images available for this property.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% else %}
+            <p>No properties available.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

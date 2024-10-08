@@ -1,0 +1,82 @@
+{% extends "master.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Edit Property</h1>
+
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('editpost', id=property.id) }}">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+            {{ form.contact_email.label(class="form-label") }}
+            {{ form.contact_email(class="form-control") }}
+            {% for error in form.contact_email.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.contact_number.label(class="form-label") }}
+            {{ form.contact_number(class="form-control") }}
+            {% for error in form.contact_number.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.location.label(class="form-label") }}
+            {{ form.location(class="form-control") }}
+            {% for error in form.location.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.price.label(class="form-label") }}
+            {{ form.price(class="form-control") }}
+            {% for error in form.price.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.bedrooms.label(class="form-label") }}
+            {{ form.bedrooms(class="form-control") }}
+            {% for error in form.bedrooms.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.bathrooms.label(class="form-label") }}
+            {{ form.bathrooms(class="form-control") }}
+            {% for error in form.bathrooms.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.carpet_area.label(class="form-label") }}
+            {{ form.carpet_area(class="form-control") }}
+            {% for error in form.carpet_area.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.image.label(class="form-label") }}
+            {{ form.image(class="form-control") }}
+            {% if property.image_filename %}
+                <p>Current Image: <img src="{{ url_for('static', filename='uploads/' + property.image_filename) }}" alt="Property Image" style="width: 150px;"></p>
+            {% endif %}
+            {% for error in form.image.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+{% endblock content %}

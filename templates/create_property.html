@@ -1,0 +1,85 @@
+{% extends "master.html" %}
+
+{% block title %}
+    Create Property
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h1>Create Property</h1>
+
+    <!-- Ensure enctype="multipart/form-data" for file uploads -->
+    <form method="POST" action="{{ url_for('makepost') }}" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}  <!-- CSRF protection -->
+
+        <div class="mb-3">
+            {{ form.contact_email.label(class="form-label") }}
+            {{ form.contact_email(class="form-control") }}
+            {% for error in form.contact_email.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.contact_number.label(class="form-label") }}
+            {{ form.contact_number(class="form-control") }}
+            {% for error in form.contact_number.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.location.label(class="form-label") }}
+            {{ form.location(class="form-control") }}
+            {% for error in form.location.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.price.label(class="form-label") }}
+            {{ form.price(class="form-control") }}
+            {% for error in form.price.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.bedrooms.label(class="form-label") }}
+            {{ form.bedrooms(class="form-control") }}
+            {% for error in form.bedrooms.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.bathrooms.label(class="form-label") }}
+            {{ form.bathrooms(class="form-control") }}
+            {% for error in form.bathrooms.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.carpet_area.label(class="form-label") }}
+            {{ form.carpet_area(class="form-control") }}
+            {% for error in form.carpet_area.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <!-- Multiple Image Upload Field -->
+        <div class="mb-3">
+            {{ form.images.label(class="form-label") }}
+            {{ form.images(class="form-control", multiple=True) }}  <!-- Multiple image upload field -->
+            {% for error in form.images.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+{% endblock content %}
